@@ -57,7 +57,9 @@ The user enters medicine information through the web interface. JavaScript sends
 - Update - Update complete medicine details using PUT
 - Partial Update - Update quantity and status using PATCH
 - Delete - Remove a medicine using DELETE
+## GitHub Link
 
+[Click here to view the MediStock Management System](https://github.com/anujashiravaleCS/CA2_WS_8799_MediStock-Management-System)
 ## Developer
 
 **Anuja Shiravale**  
