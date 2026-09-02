@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>MediStock Management System</title>
+    <meta charset="UTF-8">
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fb;
+            color: #333;
+        }
+
+        /* ================= HEADER ================= */
+
+        .navbar {
+            background-color: #1769aa;
+            color: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+        }
+
+        .brand h2 {
+            font-size: 24px;
+        }
+
+        .brand p {
+            font-size: 12px;
+            margin-top: 4px;
+            opacity: 0.9;
+        }
+
+        .online-status {
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 10px 15px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background-color: lightgreen;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+        /* ================= MAIN CONTAINER ================= */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        /* ================= WELCOME SECTION ================= */
+
+        .welcome-section {
+            margin-bottom: 25px;
+        }
+
+        .welcome-section h1 {
+            font-size: 30px;
+            color: #263238;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: #718096;
+            font-size: 15px;
+        }
+
+        /* ================= FORM CARD ================= */
+
+        .form-card,
+        .table-card {
+            background-color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .section-heading,
+        .table-heading {
+            padding: 22px 28px;
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .section-heading h3,
+        .table-heading h3 {
+            font-size: 20px;
+            color: #263238;
+            margin-bottom: 7px;
+        }
+
+        .section-heading p,
+        .table-heading p {
+            color: #78909c;
+            font-size: 14px;
+        }
+
+        /* ================= FORM ================= */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 18px;
+            padding: 28px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: bold;
+            color: #455a64;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid lightgray;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: white;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1769aa;
+            box-shadow: 0 0 5px rgba(23, 105, 170, 0.3);
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .button-section {
+            padding: 0 28px 28px;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .add-btn {
+            background-color: #2e7d32;
+            color: white;
+        }
+
+        .update-btn {
+            background-color: #1769aa;
+            color: white;
+        }
+
+        .delete-btn {
+            background-color: #d32f2f;
+            color: white;
+        }
+
+        .load-btn {
+            background-color: #546e7a;
+            color: white;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+            padding: 0 28px 28px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #1769aa;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #eeeeee;
+            color: #455a64;
+        }
+
+        tbody tr {
+            transition: 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #f3f9fd;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            color: #78909c;
+            font-size: 13px;
+        }
+
+        /* ================= RESPONSIVE DESIGN ================= */
+
+        @media screen and (max-width: 1100px) {
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media screen and (max-width: 650px) {
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .online-status {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .button-section {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="navbar">
+
+        <div class="brand">
+
+            <div class="logo">
+                💊
+            </div>
+
+            <div>
+                <h2>MediStock</h2>
+                <p>Medicine Inventory Management System</p>
+            </div>
+
+        </div>
+
+        <div class="online-status">
+            <span class="online-dot"></span>
+            System Online
+        </div>
+
+    </header>
+
+
+    <!-- ================= MAIN CONTENT ================= -->
+
+    <main class="container">
+
+
+        <!-- WELCOME SECTION -->
+
+        <section class="welcome-section">
+
+            <h1>Medicine Management Dashboard</h1>
+
+            <p>
+                Manage your medicine inventory, quantities,
+                expiry dates and stock status from one place.
+            </p>
+
+        </section>
+
+
+        <!-- MEDICINE FORM -->
+
+        <section class="form-card">
+
+            <div class="section-heading">
+
+                <h3>Medicine Details</h3>
+
+                <p>
+                    Enter the medicine information below to manage
+                    your inventory.
+                </p>
+
+            </div>
+
+
+            <div class="form-grid">
+
+
+                <div class="form-group">
+
+                    <label>Medicine ID</label>
+
+                    <input
+                        type="number"
+                        id="medicine_id"
+                        placeholder="Enter Medicine ID">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Medicine Name</label>
+
+                    <input
+                        type="text"
+                        id="medicine_name"
+                        placeholder="Enter Medicine Name">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        placeholder="Enter Quantity">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Expiry Date</label>
+
+                    <input
+                        type="date"
+                        id="expiry_date">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Medicine Status</label>
+
+                    <select id="status">
+
+                        <option value="">
+                            Select Status
+                        </option>
+
+                        <option value="Available">
+                            Available
+                        </option>
+
+                        <option value="Not Available">
+                            Not Available
+                        </option>
+
+                        <option value="In Stock">
+                            In Stock
+                        </option>
+
+                        <option value="Out of Stock">
+                            Out of Stock
+                        </option>
+
+                        <option value="Low Stock">
+                            Low Stock
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="button-section">
+
+                <button
+                    class="add-btn"
+                    onclick="addMedicine()">
+
+                    Add Medicine
+
+                </button>
+
+
+                <button
+                    class="update-btn"
+                    onclick="updateMedicine()">
+
+                    Update Medicine
+
+                </button>
+<button class="patch-btn" onclick="updateStock()">
+    Update Stock
+</button>
+
+                <button
+                    class="delete-btn"
+                    onclick="deleteMedicine()">
+
+                    Delete Medicine
+
+                </button>
+
+
+                <button
+                    class="load-btn"
+                    onclick="loadMedicines()">
+
+                    Load Medicines
+
+                </button>
+                
+                
+
+            </div>
+
+        </section>
+
+
+        <!-- MEDICINE INVENTORY TABLE -->
+
+        <section class="table-card">
+
+            <div class="table-heading">
+
+                <h3>Medicine Inventory</h3>
+
+                <p>
+                    View all medicine records currently stored
+                    in the system.
+                </p>
+
+            </div>
+
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+                            <th>Medicine Name</th>
+                            <th>Quantity</th>
+                            <th>Expiry Date</th>
+                            <th>Status</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="medicineTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <p>
+            © 2026 MediStock Management System |
+            Medicine Inventory Dashboard
+        </p>
+
+    </footer>
+
+
+    <!-- ================= JAVASCRIPT ================= -->
+
+    <script>
+
+        function loadMedicines() {
+
+            fetch("webresources/medicines")
+                .then(response => response.json())
+                .then(data => {
+
+                    let table =
+                        document.getElementById("medicineTable");
+
+                    table.innerHTML = "";
+
+                    data.forEach(medicine => {
+
+                        let row = `
+                            <tr>
+                                <td>${medicine.medicine_id}</td>
+                                <td>${medicine.medicine_name}</td>
+                                <td>${medicine.quantity}</td>
+                                <td>${medicine.expiry_date}</td>
+                                <td>${medicine.status}</td>
+                            </tr>
+                        `;
+
+                        table.innerHTML += row;
+
+                    });
+
+                })
+                .catch(error => {
+
+                    alert("Error loading medicines");
+                    console.error(error);
+
+                });
+
+        }
+
+
+        function addMedicine() {
+
+            let medicine = {
+
+                medicine_id:
+                    parseInt(
+                        document.getElementById(
+                            "medicine_id"
+                        ).value
+                    ),
+
+                medicine_name:
+                    document.getElementById(
+                        "medicine_name"
+                    ).value,
+
+                quantity:
+                    parseInt(
+                        document.getElementById(
+                            "quantity"
+                        ).value
+                    ),
+
+                expiry_date:
+                    document.getElementById(
+                        "expiry_date"
+                    ).value,
+
+                status:
+                    document.getElementById(
+                        "status"
+                    ).value
+
+            };
+
+
+            fetch("webresources/medicines", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(medicine)
+
+            })
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                alert(data.message || data.error);
+
+                loadMedicines();
+
+            })
+
+            .catch(error => {
+
+                alert("Error adding medicine");
+                console.error(error);
+
+            });
+
+        }
+
+
+        function updateMedicine() {
+
+            let medicineId =
+                document.getElementById(
+                    "medicine_id"
+                ).value;
+
+
+            if (medicineId === "") {
+
+                alert("Please enter Medicine ID");
+
+                return;
+
+            }
+
+
+            let medicine = {
+
+                medicine_id:
+                    parseInt(medicineId),
+
+                medicine_name:
+                    document.getElementById(
+                        "medicine_name"
+                    ).value,
+
+                quantity:
+                    parseInt(
+                        document.getElementById(
+                            "quantity"
+                        ).value
+                    ),
+
+                expiry_date:
+                    document.getElementById(
+                        "expiry_date"
+                    ).value,
+
+                status:
+                    document.getElementById(
+                        "status"
+                    ).value
+
+            };
+
+
+            fetch("webresources/medicines/update", {
+
+                method: "PUT",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(medicine)
+
+            })
+
+            .then(response => {
+
+                console.log(
+                    "HTTP Status:",
+                    response.status
+                );
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                if (data.message) {
+
+                    alert(data.message);
+
+                }
+
+                else if (data.error) {
+
+                    alert("Error: " + data.error);
+
+                }
+
+
+                loadMedicines();
+
+            })
+
+            .catch(error => {
+
+                console.error(
+                    "Update Error:",
+                    error
+                );
+
+                alert("Error updating medicine");
+
+            });
+
+        }
+
+function updateStock() {
+
+    let medicineId =
+        document.getElementById("medicine_id").value;
+
+    let quantity =
+        document.getElementById("quantity").value;
+
+    let status =
+        document.getElementById("status").value;
+
+    if (medicineId === "" ||
+        quantity === "" ||
+        status === "") {
+
+        alert("Please enter Medicine ID, Quantity and Status");
+        return;
+    }
+
+    let medicine = {
+
+        medicine_id: parseInt(medicineId),
+
+        quantity: parseInt(quantity),
+
+        status: status
+    };
+
+
+    fetch("webresources/medicines/stock", {
+
+        method: "PATCH",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(medicine)
+
+    })
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        alert(data.message || data.error);
+
+        loadMedicines();
+
+    })
+
+    .catch(error => {
+
+        console.error("PATCH Error:", error);
+
+        alert("Error updating medicine stock");
+
+    });
+}
+        function deleteMedicine() {
+
+            let medicineId =
+                document.getElementById(
+                    "medicine_id"
+                ).value;
+
+
+            if (medicineId === "") {
+
+                alert("Please enter Medicine ID");
+
+                return;
+
+            }
+
+
+            fetch(
+                "webresources/medicines/" +
+                medicineId,
+                {
+
+                    method: "DELETE"
+
+                }
+            )
+
+            .then(response => response.json())
+
+            .then(data => {
+
+                alert(
+                    data.message ||
+                    data.error
+                );
+
+                loadMedicines();
+
+            })
+
+            .catch(error => {
+
+                alert("Error deleting medicine");
+
+                console.error(error);
+
+            });
+
+        }
+
+    </script>
+
+</body>
+
+</html>
